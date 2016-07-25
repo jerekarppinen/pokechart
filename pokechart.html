@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Pokechart</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+	<script>
+
+	String.prototype.ucfirst = function() {
+		return this.charAt(0).toUpperCase() + this.substr(1);
+	}
+
+	$(document).ready(function() {
+
+		var defendingObjectGood = {
+			'normal': ["fighting"],
+			'fighting': ["flying","psychic","fairy"],
+			'flying': ["rock","electric","ice"],
+			'poison': ["ground","psychic"],
+			'ground': ["water","grass", "ice"],
+			'rock': ["fighting","ground", "steel", "water", "grass"],
+			'bug': ["flying","rock", "fire"],
+			'ghost': ["ghost","dark"],
+			'steel': ["fighting","ground", "fire"],
+			'fire': ["ground","rock", "water"],
+			'water': ["grass","electric"],
+			'grass': ["flying","poison", "bug", "fire", "ice"],
+			'electric': ["ground"],
+			'psychic': ["bug", "ghost", "dark"],
+			'ice': ["fighting", "rock", "steel", "fire"],
+			'dragon': ["ice", "dragon", "fairy"],
+			'dark': ["fighting", "bug", "fairy"],
+			'fairy': ["poison", "steel"]
+		};
+
+		var options = $("#type");
+		$.each(defendingObjectGood, function(key, val) {
+		    options.append($("<option />").val(key).text(key.ucfirst()));
+		});
+
+		options.on("change paste keyup", function() {
+			$("#good").empty();
+
+			var defender = $(this).val();
+
+			$.each(defendingObjectGood[defender], function(key, val) {
+				console.log(key, val);
+				$("#good").append('<span>'+val+'</span>');
+			});
+
+		});
+
+});
+
+
+</script>
+<style>
+
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+	body {
+		width: 100%;
+		font-size: 3.8vw;
+		color: white;
+		background: black;
+	}
+	select {
+		text-align: center;
+		width: 90%;
+		line-height: 2em;
+		display: block;
+		border: 2px solid white;
+		font-size: 3.8vw;
+		margin: 1em auto;
+		padding: 1em;
+		background: #333;
+		color: white;
+		outline: none;
+	}
+	#good {
+		text-align: center;
+	}
+	#good span {
+		line-height: 1.5em;
+		display: inline-block;
+		width: auto;
+		margin: 0.5em;
+		padding: 1em;
+		text-transform:capitalize;
+	}
+
+#out-circle {
+  width: 100%;
+  height: 100%;
+  background-color:black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  z-index: -1;
+  opacity: 0.5;
+}
+#pokeball {
+  width: 30vw;
+  height:30vw;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius:100%;
+}
+#top-pokeball {
+  height:15vw;
+  width:30vw;
+  background-color: red;
+  border-radius: 15vw 15vw 0 0;
+}
+#mid-pokeball {
+  width:5vw;
+  height:5vw;
+  background-color:red;
+  border-radius:50%;
+  border:3vw solid black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation:change-color 3s infinite linear;
+}
+#line{
+  width:30vw;
+  height:5vw;
+  background-color:black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+ @keyframes change-color {
+	0%  {background-color:red;}
+	50%{background-color: white;}
+   100%{background-color:red;}
+
+}
+
+</style>
+</head>
+<body>
+  <div id="out-circle">
+      <div id="pokeball">
+        <div id="top-pokeball"></div>
+        <div id="line"></div>
+        <div id="mid-pokeball"></div>
+    </div>
+  </div>
+
+	<select id="type" autofocus>
+		<option>-- Select type --</option>
+	</select>
+	<div id="good"></div>
+</body>
