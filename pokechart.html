@@ -1,0 +1,90 @@
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<title>Pokechart</title>
+
+
+	<script>
+
+	$(document).ready(function(){
+		
+
+
+		$("#type").on("change paste keyup", function() {
+
+			var defender = $(this).val().toLowerCase();
+
+			if(defender.length == 0) {
+				$("#good > tbody").html("");
+			}
+
+			var defendingObjectGood = {
+				'normal': ["fighting"], 
+				'fighting': ["flying","psychic","fairy"],
+				'flying': ["rock","electric","ice"],
+				'poison': ["ground","psychic"],
+				'ground': ["water","grass", "ice"],
+				'rock': ["fighting","ground", "steel", "water", "grass"],
+				'bug': ["flying","rock", "fire"],
+				'ghost': ["ghost","dark"],
+				'steel': ["fighting","ground", "fire"],
+				'fire': ["ground","rock", "water"],
+				'water': ["grass","electric"],
+				'grass': ["flying","poison", "bug", "fire", "ice"],
+				'electric': ["ground"],
+				'psychic': ["bug", "ghost", "dark"],
+				'ice': ["fighting", "rock", "steel", "fire"],
+				'dragon': ["ice", "dragon", "fairy"],
+				'dark': ["fighting", "bug", "fairy"],
+				'fairy': ["poison", "steel"]
+			};
+
+			for (var property in defendingObjectGood) {
+				if (defendingObjectGood.hasOwnProperty(property)) {
+					if(property == defender) {
+						//console.log(defendingObjectGood[property]);
+						$("#good > tbody").html("");
+						defendingObjectGood[property].forEach(function(v){
+							//console.log(v);
+							$("#good").find('tbody')
+							.append($('<tr>'))
+							.append('<td>')
+							.append(v)
+						});
+					}
+				}
+			}
+
+
+
+		});
+
+
+
+
+});
+
+
+</script>
+<style>
+	input[type="text"]
+	{
+		font-size:24px;
+	}
+	td
+	{
+	    font-size: 10pt;
+	}
+</style>
+</head>
+<body>
+	<form>
+		<h2>Type:</h2><br>
+		<input type="text" id="type" autofocus font-size="35">
+	</form>
+	<table id="good">
+		<tbody>
+
+		</tbody>
+	</table>
+</body>
