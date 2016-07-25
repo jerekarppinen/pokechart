@@ -41,12 +41,26 @@
 
 			for (var property in defendingObjectGood) {
 				if (defendingObjectGood.hasOwnProperty(property)) {
-					if(property == defender) {
-						//console.log(defendingObjectGood[property]);
-						$("#good > tbody").html("");
+                    if(property.match(defender+"$")) {
+                        $("#preferences > tbody").html("");
+                        $("#suggestText").html("");
+                        $("#suggestValue").html(property.toUpperCase());
 						defendingObjectGood[property].forEach(function(v){
 							//console.log(v);
-							$("#good").find('tbody')
+							$("#preferences").find('tbody')
+							.append($('<tr>'))
+							.append('<td>')
+							.append(v)
+						});
+                    }
+					else if(property.match("^"+defender)) {
+						//console.log(defendingObjectGood[property]);
+						$("#preferences > tbody").html("");
+                        $("#suggestText").html("Did you mean ");
+                        $("#suggestValue").html(property.toUpperCase()+"?");
+						defendingObjectGood[property].forEach(function(v){
+							//console.log(v);
+							$("#preferences").find('tbody')
 							.append($('<tr>'))
 							.append('<td>')
 							.append(v)
@@ -75,6 +89,9 @@
 	{
 	    font-size: 10pt;
 	}
+    #suggestText {
+        color:#6E6E6E;
+    }
 </style>
 </head>
 <body>
@@ -82,9 +99,14 @@
 		<h2>Type:</h2><br>
 		<input type="text" id="type" autofocus font-size="35">
 	</form>
-	<table id="good">
+    
+	<table id="suggest">
+        <tr><td id="suggestText"></td></tr>
+        <tr><td id="suggestValue"></td></tr>
+    </table>
+    
+	<table id="preferences">
 		<tbody>
-
 		</tbody>
 	</table>
 </body>
